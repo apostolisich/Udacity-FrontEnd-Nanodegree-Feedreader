@@ -100,28 +100,15 @@ $(function() {
          * see if the content changed. This can happen either if the length
          * of the 2 feed arrays is different or if their content is different.
          */
-        beforeEach(function(done){
-            let feedOne = [], feedTwo = [];
-            loadFeed(1, function(){
+        beforeEach(function(done) {
+            loadFeed(1, function() {
+              let prevFeedData = $('.feed .entry-link');
+              loadFeed(2, function(){
+                let newFeedData= $('.feed .entry-link');
+                arraysAreEqual = prevFeedData.html() === newFeedData.html() ? true : false;
                 done();
+              });
             });
-
-            feedOne = $('.feed .entry-link');
-
-            loadFeed(2, function(){
-                done();
-            });
-
-            feedTwo = $('.feed .entry-link');
-            
-            if(feedOne.length === feedTwo.length) {
-                arraysAreEqual = false;
-            } else {
-                for(var i = feedOne.length; i--;) {
-                    if(feedOne[i] !== feedTwo[i])
-                        arraysAreEqual = false;
-                }
-            }
         });
 
         it('changes the content of the page', function(done){
